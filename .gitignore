@@ -1,0 +1,26 @@
+# Ignore temporary / binary files
+*.o
+*.obj
+*.a
+*.pyc
+*.log
+
+# Ignore some special files
+test.py
+
+# Ignore temporary directories
+__pycache__
+
+# Ignore storage directories
+postgres_data/
+**/logs/
+
+# Ignore some volumes
+**/utils/
+!/utils/
+
+.idea/
+venv
+
+# Prevent private keys and credentials to be stored inside the repo
+*.env
