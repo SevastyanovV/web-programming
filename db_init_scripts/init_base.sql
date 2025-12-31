@@ -40,7 +40,7 @@ create table if not exists occupied_seats(
 );
 
 
-insert into event_types ("type") values ('Шоу'), ('Концерт'), ('События в ближайшие дни');
+insert into event_types ("type") values ('Шоу'), ('Концерты'), ('События в ближайшие дни');
 
 insert into events (type_id, "name", datetime, author, tags, img_name, price, rating, discount) values
     (3, 'Зимние грёзы', '2026-01-5 18:00:00', 'Артисты театра Современник', array['Театр', 'Драма', 'Зима', 'Премьера', '16+'], 'winter_dreams.jpg', 1800.00, 8.5, 30.0),
@@ -50,7 +50,7 @@ insert into events (type_id, "name", datetime, author, tags, img_name, price, ra
     (1, 'Рок-симфония при свечах', '2026-01-11 20:30:00', 'Оркестр CAGMO', array['Оркестр', 'Рок', 'Свечи', 'Романтика', '16+'], 'cagmo.jpg', 2800.00, 9.5, 20.0),
     (1, 'Симфония Imagine Dragons и Coldplay', '2026-01-12 21:00:00', 'Оркестр CAGMO', array['Шоу', 'Оркестр', 'Современная музыка', 'Поп-рок'], 'cagmo.jpg', 3000.00, 9.7, 10.0),
     (2, 'Rock Legends: The Best of 90s', '2026-01-14 20:00:00', 'Various Artists', array['Рок', '90s', 'Лайв', 'Легенды', '18+'], 'rock_90_legends.jpg', 3500.00, 9.3, 25.0),
-    (2, 'Джаз под звездами', '2026-01-20 19:30:00', 'Московский джаз-бэнд', array['Джаз', 'Живая музыка', 'Открытая площадка', '16+'], 'jazz.jpg', 2200.00, 8.9, 15.0),
+    (2, 'Джаз под звездами', '2026-01-20 19:30:00', 'Московский джаз-бэнд', array['Джаз', 'Живая музыка', 'Открытая площадка', '16+'], 'jazz.png', 2200.00, 8.9, 15.0),
     (2, 'Symphonic Metal Night', '2026-01-24 21:00:00', 'Epica Symphony', array['Метал', 'Симфоник-метал', 'Энергия', '18+'], 'symphonic_metal.jpg', 3200.00, 9.4, 10.0);
 
 insert into users (username) values ('test_user');

@@ -83,7 +83,7 @@ async def get_event_service(event_id: int) -> EventDetail:
             title=event[1],
             datetime=event[2],
             author=event[3],
-            img_url=f'{self_url}/image/{event[4]}',
+            img_url=f'{self_url}/static/{event[4]}',
             price=event[5],
             rating=event[6],
             discount=event[7],
@@ -107,22 +107,37 @@ async def create_order_service(
             if not event:
                 return OrderResponse(
                     status='denied',
-                    reason='Event not found',
+                    reason='Мероприятие не найдено',
                     ticket=None,
                 )
 
             if event['datetime'] < datetime.now():
                 return OrderResponse(
                     status='denied',
-                    reason='The event has already started or ended',
+                    reason='Мероприятие уже началось или закончилось',
                     ticket=None,
                 )
 
-            cost = event['price'] * len(order_data.seats)
+            price = float(event['price'])
+            cost = 0.
+            for seat in order_data.seats:
+                if seat.startswith('A'):
+                    cost += price + 1500.
+                elif seat.startswith('B'):
+                    cost += price + 1000.
+                elif seat.startswith('C'):
+                    cost += price
+                else:
+                    return OrderResponse(
+                        status='denied',
+                        reason=f'Неверное ID места: {seat}',
+                        ticket=None,
+                    )
+
             if abs(order_data.payment - float(cost)) > 1e-6:
                 return OrderResponse(
                     status='denied',
-                    reason='Invalid cost',
+                    reason='Некорректная сумма оплаты',
                     ticket=None,
                 )
 
@@ -141,7 +156,7 @@ async def create_order_service(
             if occupied:
                 return OrderResponse(
                     status='denied',
-                    reason=f'Following seats are already occupied: {occupied}',
+                    reason=f'Эти места уже заняты: {", ".join(occupied)}',
                     ticket=None,
                 )
 
@@ -230,7 +245,7 @@ async def _is_ticket_code_exists(
     )
 
 
-async def _broadcast_occupied_seats(event_id: int, seat_ids: list[int]) -> None:
+async def _broadcast_occupied_seats(event_id: int, seat_ids: list[str]) -> None:
     event_connections = active_connections.get(event_id)
     if event_connections:
         for websocket in event_connections:

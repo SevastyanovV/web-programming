@@ -1,6 +1,20 @@
 version: '3.9'
 
 services:
+  frontend:
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+      args:
+        - REACT_APP_BASE_URL=${REACT_APP_BASE_URL}
+        - REACT_APP_BASE_URL_WS=${REACT_APP_BASE_URL_WS}
+    restart: always
+    ports:
+      - "30002:30002"
+    depends_on:
+      backend:
+        condition: service_started
+
   backend:
     build:
       context: ./backend/
